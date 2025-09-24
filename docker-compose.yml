@@ -1,0 +1,19 @@
+services:
+  backend:
+    build:
+      context: ./LiveTradeX-Backend-main
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: LiveTradeX_FrontEnd-main/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      # Point the React app at the backend service name
+      - REACT_APP_API_BASE=http://backend:8080
+    depends_on:
+      - backend
