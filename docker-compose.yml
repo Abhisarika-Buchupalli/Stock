@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   backend:
     build:
@@ -5,6 +7,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+    volumes:
+      - maven-repo:/root/.m2  # ✅ speeds up Maven build
 
   frontend:
     build:
@@ -16,3 +20,6 @@ services:
       - REACT_APP_API_BASE=http://backend:8080
     depends_on:
       - backend
+
+volumes:
+  maven-repo:
