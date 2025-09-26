@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   backend:
     build:
@@ -8,12 +10,11 @@ services:
 
   frontend:
     build:
-      context: .
-      dockerfile: LiveTradeX_FrontEnd-main/Dockerfile
+      context: .                # 👈 this is where Dockerfile and package.json are
+      dockerfile: Dockerfile    # 👈 fixed: no longer pointing to a non-existent path
     ports:
       - "3000:3000"
     environment:
-      # Point the React app at the backend service name
       - REACT_APP_API_BASE=http://backend:8080
     depends_on:
       - backend
