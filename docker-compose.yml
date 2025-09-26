@@ -1,40 +1,25 @@
 version: "3.9"
 
 services:
-backend:
-build:
-context: ./LiveTradeX-Backend-main
-dockerfile: Dockerfile
-ports:
-- "8080:8080"
-volumes:
-- maven-repo:/root/.m2
-depends_on:
-mysql-db:
-condition: service_healthy
+  backend:
+    build:
+      context: ./LiveTradeX-Backend-main
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - maven-repo:/root/.m2  # ✅ speeds up Maven build
 
-frontend:
-build:
-context: ./LiveTradeX_FrontEnd-main
-dockerfile: Dockerfile
-ports:
-- "3000:3000"
-environment:
-- REACT_APP_API_BASE=http://backend:8080
-depends_on:
-- backend
-
-mysql-db:
-image: mysql:8.0
-restart: always
-environment:
-MYSQL_ROOT_PASSWORD: "1289"
-MYSQL_DATABASE: stock_db
-healthcheck:
-test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-timeout: 10s
-retries: 5
-interval: 5s
+  frontend:
+    build:
+      context: ./LiveTradeX_FrontEnd-main
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_BASE=http://backend:8080
+    depends_on:
+      - backend
 
 volumes:
-maven-repo:
+  maven-repo:
