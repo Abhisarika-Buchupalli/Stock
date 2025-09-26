@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   backend:
     build:
@@ -10,8 +8,8 @@ services:
 
   frontend:
     build:
-      context: .                # 👈 this is where Dockerfile and package.json are
-      dockerfile: Dockerfile    # 👈 fixed: no longer pointing to a non-existent path
+      context: ./LiveTradeX_FrontEnd-main
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     environment:
